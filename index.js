@@ -26,14 +26,13 @@ app.get("/api/hello", function (req, res) {
 });
 
 app.get("/api/:date?", function (req, res) {
-  console.log(req.params.date);
   if (req.params.date === undefined) {
     res.json({unix: Math.floor(new Date().valueOf()), utc: new Date().toUTCString()});
-  } else if (new Date(req.params.date).toUTCString() === "Invalid Date") {
-    if (new Date(req.params.date * 1) === "Invalid Date") {
-      res.json({error: "Invalid Date"});
-    }
-    else {
+  } else if (new Date(req.params.date).toUTCString() === "Invalid Date" || new Date(req.params.date * 1) === "Invalid Date") {
+    console.log(new Date(req.params.date * 1));
+    if (new Date(req.params.date * 1).toUTCString() === "Invalid Date") {
+      res.json({error : "Invalid Date"});
+    } else {
       res.json({unix: Number(req.params.date), utc: new Date(req.params.date * 1).toUTCString()});
     }
   } else {
