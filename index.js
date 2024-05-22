@@ -30,7 +30,7 @@ app.get("/api/:date?", function (req, res) {
   if (req.params.date === undefined) {
     res.json({unix: Math.floor(new Date().valueOf()), utc: new Date().toUTCString()});
   } else if (new Date(req.params.date).toUTCString() === "Invalid Date") {
-    if (new Date(req.params.date * 1000) === "Invalid Date") {
+    if (new Date(req.params.date * 1) === "Invalid Date") {
       res.json({error: "Invalid Date"});
     }
     else {
