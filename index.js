@@ -36,7 +36,6 @@ app.get("/api/:date?", function (req, res) {
       res.json({unix: Number(req.params.date), utc: new Date(req.params.date * 1).toUTCString()});
     }
   } else {
-    console.log(new Date(req.params.date).getSeconds(), new Date());
     res.json({unix: Math.floor(new Date(req.params.date).valueOf() / 1000), utc: new Date(req.params.date).toUTCString()});
   };
 });
