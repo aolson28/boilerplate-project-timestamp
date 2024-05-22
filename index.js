@@ -26,8 +26,9 @@ app.get("/api/hello", function (req, res) {
 });
 
 app.get("/api/:date?", function (req, res) {
-  if (req.params.date === null) {
-    res.json({unix: Math.floor(new Date().valueOf() / 1000), utc: new Date().toUTCString()});
+  console.log(req.params.date);
+  if (req.params.date === undefined) {
+    res.json({unix: Math.floor(new Date().valueOf()), utc: new Date().toUTCString()});
   } else if (new Date(req.params.date).toUTCString() === "Invalid Date") {
     if (new Date(req.params.date * 1000) === "Invalid Date") {
       res.json({error: "Invalid Date"});
@@ -36,7 +37,7 @@ app.get("/api/:date?", function (req, res) {
       res.json({unix: Number(req.params.date), utc: new Date(req.params.date * 1).toUTCString()});
     }
   } else {
-    res.json({unix: Math.floor(new Date(req.params.date).valueOf() / 1000), utc: new Date(req.params.date).toUTCString()});
+    res.json({unix: Math.floor(new Date(req.params.date).valueOf()), utc: new Date(req.params.date).toUTCString()});
   };
 });
 
