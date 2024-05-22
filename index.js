@@ -27,11 +27,16 @@ app.get("/api/hello", function (req, res) {
 
 app.get("/api/:date?", function (req, res) {
   if (req.params.date === "") {
-    res.json({utc: new Date().toUTCString()});
+    res.json({unix: new Date().getSeconds(), utc: new Date().toUTCString()});
   } else if (new Date(req.params.date).toUTCString() === "Invalid Date") {
-    res.json({unix: req.params.date, utc: new Date(req.params.date * 1000).toUTCString()});
+    if (new Date(req.params.date * 1000) === "Invalid Date") {
+      res.json({error: "Invalid Date"});
+    }
+    else {
+      res.json({unix: Number(req.params.date), utc: new Date(req.params.date * 1000).toUTCString()});
+    }
   } else {
-    res.json({utc: new Date(req.params.date).toUTCString()});
+    res.json({unix: new Date(req.params.date).getSeconds(), utc: new Date(req.params.date).toUTCString()});
   };
 });
 
